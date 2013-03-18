@@ -7,10 +7,12 @@ A nodejs server which serves Waterbear from the RaspberryPi and provides a way f
 Installing
 ==========
 git submodule init
+
 git submodule update
 
 
 sudo aptiptude install nodejs npm
+
 sudo npm install fs ws sys url http path mime util
 
 

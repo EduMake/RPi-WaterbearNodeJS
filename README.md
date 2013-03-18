@@ -6,6 +6,9 @@ A nodejs server which serves Waterbear from the RaspberryPi and provides a way f
 
 Installing
 ==========
+
+Once you have got the code cd into the directory then run :-
+
 git submodule init
 
 git submodule update
@@ -20,3 +23,10 @@ Running
 =======
 
 nodejs nodejs-server.js
+
+then using a web browser on another machine visit
+
+http://192.168.1.104:8000/garden.html?plugin=nodeminecraft
+
+changing the IP to the one on your machine
+

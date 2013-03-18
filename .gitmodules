@@ -3,4 +3,4 @@
 	url = git@github.com:waterbearlang/waterbear.git
 [submodule "minecraft-pi"]
 	path = minecraft-pi
-	url = git@github.com:remixz/minecraft-pi.git
+	url = git@github.com:stretchyboy/minecraft-pi.git

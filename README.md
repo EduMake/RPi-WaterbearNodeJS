@@ -3,6 +3,11 @@ RPi-WaterbearNodeJS
 
 A nodejs server which serves Waterbear from the RaspberryPi and provides a way for nodejs scripts to be uploaded and run.
 
+Requirements
+============
+
+Get & install Minecraft Pi Edition from http://pi.minecraft.net/?p=68
+
 
 Installing
 ==========
@@ -18,6 +23,8 @@ npm install
 
 Running
 =======
+
+Get Minecraft Pi edition running and start a  game.
 
 ```bash
 nodejs nodejs-server.js

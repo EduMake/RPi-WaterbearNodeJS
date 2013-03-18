@@ -6,10 +6,11 @@ var fs = require('fs'),
     url = require('url'),
     http = require('http'),
     path = require('path'),
-    mime = require('mime');
+    mime = require('mime'),
+    vm = require('vm');
 
 var httpServer = http.createServer( function(request, response) {
-    var aURL = url.parse(request.url);
+    var aURL = url.parse(request.url, true);
     
     var pathname = aURL.pathname;
     //console.log("request =", request);
@@ -17,8 +18,21 @@ var httpServer = http.createServer( function(request, response) {
     
     if(pathname == "/run")
     {
+      //console.log("aURL =", aURL);
       
-      console.log("aURL =", aURL);
+      if(typeof aURL.query.code !== 'null')
+      {
+        
+        console.log("aURL.query.code =", aURL.query.code);
+        
+        fs.writeFile("code_cache/test.js", aURL.query.code);
+       
+        eval(aURL.query.code);
+        
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(aURL.query.code);
+        response.end();
+      }
       
       /*
           socket.on('commit-run-file', function(data) {

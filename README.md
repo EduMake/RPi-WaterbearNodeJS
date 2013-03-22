@@ -17,6 +17,7 @@ Once you have got the code cd into the directory then run:
 ```bash
 git submodule update --init --recursive
 # If not installed: sudo aptitude install nodejs npm
+sudo npm install forever -g
 npm install
 ```
 
@@ -27,7 +28,7 @@ Running
 Get Minecraft Pi edition running and start a  game.
 
 ```bash
-nodejs nodejs-server.js
+forever nodejs-server.js
 ```
 
 then using a web browser on another machine visit

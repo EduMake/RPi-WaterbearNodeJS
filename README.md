@@ -26,7 +26,7 @@ Running
 Get Minecraft Pi edition running and start a  game.
 
 ```bash
-forever nodejs-server.js
+nodejs nodejs-server.js
 ```
 
 then using a web browser on another machine visit
@@ -42,6 +42,8 @@ Running Forever
 ```bash
 sudo aptitude install g++
 sudo npm install forever -g
+
+forever nodejs-server.js
 ```
 
 Running on the PC version (V.V. Buggy)

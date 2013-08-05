@@ -25,13 +25,26 @@ var httpServer = http.createServer( function(request, response) {
         
         console.log("aURL.query.code =", aURL.query.code);
         
-        fs.writeFile("code_cache/test.js", aURL.query.code);
+        fs.writeFile("test.js", aURL.query.code);
        
-        eval(aURL.query.code);
+        var bSuccess = true;
+        try{
+          eval(aURL.query.code);
+        } 
+        catch(error){
+          bSuccess = false;
+          response.writeHead(500, {'Content-Type': 'text/html'});
+          response.write(error);
+          response.end();
+        }
         
-        response.writeHead(200, {'Content-Type': 'text/html'});
-        response.write(aURL.query.code);
-        response.end();
+        if(bSuccess)
+        {
+         response.writeHead(200, {'Content-Type': 'text/html'});
+          //response.write(aURL.query.callback+"("+JSON.stringify(aURL.query.code)+")");
+          response.write(aURL.query.callback+"(true)");
+          response.end();
+        }
       }
       
       /*

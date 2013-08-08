@@ -5,7 +5,7 @@ var client = new Minecraft('localhost', 4711, function() {
 var zeros={x:0, y:0, z:0};
 var posA_6 = {
     x: -200,
-    y: -1,
+    y: 0,
     z: -200
 };
 var posB_6 = null;
@@ -48,6 +48,6 @@ client.getHeight({
     var position_8 = posA_8;
     var position_3 = directioncalcs["up"](position_8, 20);
     client.setBlocks(position_17.x, position_17.y, position_17.z, position_3.x, position_3.y, position_3.z, client.blocks["AIR"]);
-    client.setBlocks(position_6.x, position_6.y, position_6.z, position_17.x, position_17.y, position_17.z, client.blocks["DIRT"]);
+    client.setBlocks(position_6.x, position_6.y, position_6.z, position_17.x, position_17.y, position_17.z, client.blocks["GRASS"]);
 });
 });

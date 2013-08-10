@@ -15,25 +15,23 @@ var httpServer = http.createServer( function(request, response) {
     var aURL = url.parse(request.url, true);
     var pathname = aURL.pathname;
     var bSuccess = null;
-        
-    
-    process.on('uncaughtException', function(error) {
-        bSuccess = false;
-        console.log('Caught exception: ' + error);
-        response.writeHead(500, {'Content-Type': 'text/html'});
-        console.log("error =", error);
-        response.write(error.toString());
-        response.end(); 
-        return;
-    });
-    
     
     if(pathname === "/run")
     {
         //console.log("aURL =", aURL);
         if(typeof aURL.query.code !== 'null' && aURL.query.code.trim().length > 0)
         {
-          
+            
+            process.once('uncaughtException', function(error) { // This could be a problem and need to be .on( but that might exceed the max of 10
+                bSuccess = false;
+                console.log('Caught exception: ' + error);
+                response.writeHead(500, {'Content-Type': 'text/html'});
+                console.log("error =", error);
+                response.write(error.toString());
+                response.end(); 
+                return;
+            });
+            
             console.log("aURL.query.code =", aURL.query.code);
             
             fs.writeFile("test.js", aURL.query.code);

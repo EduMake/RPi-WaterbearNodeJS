@@ -33,20 +33,10 @@ nodejs nodejs-server.js
 
 then using a web browser on another machine visit
 
-http://<ip>:8000/garden.html?plugin=nodeminecraft
+http://IP:8000/garden.html?plugin=nodeminecraft
 
-changing the IP to the one on your machine
+changing the IP to the one for your Raspberry Pi
 
-
-Running Forever
-===============
-
-```bash
-sudo aptitude install g++
-sudo npm install forever -g
-
-forever nodejs-server.js
-```
 
 Running on the PC version (V.V. Buggy)
 ======================================
@@ -58,3 +48,23 @@ Install the RaspberryJuice plugin from http://dev.bukkit.org/server-mods/raspber
 Follow the rest of the Raspberry Pi instructions about installing and running nodejs and the web page. 
 
 Try not to make 40000 blocks of TNT touch lava.
+
+License
+=======
+
+Copyright 2011 EduMake Limited
+
+Waterbear code licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Waterbear Documentation</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://waterbearlang.com/" property="cc:attributionName" rel="cc:attributionURL">Dethe Elza</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported License</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.apache.org/licenses/LICENSE-2.0" rel="cc:morePermissions">http://www.apache.org/licenses/LICENSE-2.0</a>.
+

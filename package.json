@@ -4,7 +4,8 @@
   "main": "nodejs-server.js",
   "dependencies": {
     "mime": "~1.2.9",
-    "ws": "~0.4.25"
+    "ws": "~0.4.25",
+    "piface-node":""
   },
   "repository": {
     "type": "git",

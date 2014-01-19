@@ -33,8 +33,9 @@ var httpServer = http.createServer( function(request, response) {
             });
             
             console.log("aURL.query.code =", aURL.query.code);
+            console.log("Code Running");
             
-            fs.writeFile("test.js", aURL.query.code);
+            fs.writeFile("lastrun.js", aURL.query.code);
             bSuccess = true;
             
             try{
@@ -65,7 +66,6 @@ var httpServer = http.createServer( function(request, response) {
         {
             //console.log("response =", response);
             response.writeHead(500, {'Content-Type': 'text/html'});
-            
             error = "Didn't Succeed";
             console.log("error =", error);
             response.write(error);

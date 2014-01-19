@@ -51,7 +51,8 @@ var httpServer = http.createServer( function(request, response) {
             }
             
         }
-        /*
+        
+        
         if(bSuccess)
         {
             //console.log("response =", response);
@@ -70,7 +71,7 @@ var httpServer = http.createServer( function(request, response) {
             response.write(error);
             response.end(); 
         }
-        */
+        
     }
     else
     {
@@ -80,7 +81,7 @@ var httpServer = http.createServer( function(request, response) {
         }
         var filename = path.join(process.cwd(), 'waterbear', pathname);
     
-        path.exists(filename, function(exists) {
+        fs.exists(filename, function(exists) {
             if (!exists) {
                 response.writeHead(404, {"Content-Type": "text/plain"});
                 response.write("404 Not Found");
@@ -92,7 +93,7 @@ var httpServer = http.createServer( function(request, response) {
             fs.createReadStream(filename, {
                 'flags': 'r',
                 'encoding': 'binary',
-                'mode': 0666,
+                'mode': 666,
                 'bufferSize': 4 * 1024
             }).addListener("data", function(chunk) {
                 response.write(chunk, 'binary');

@@ -1,5 +1,3 @@
-//require.paths.unshift(__dirname + '/lib');
-
 var fs = require('fs'),
     ws = require('ws'),
     util = require('util'),
@@ -9,7 +7,18 @@ var fs = require('fs'),
     mime = require('mime'),
     vm = require('vm');
 
+var bSuccess = true;
+var childprocesses = [];
 
+
+process.on('SIGINT',function(){
+  for (var kid in childprocesses) {
+    if( childprocesses.hasOwnProperty( kid ) )
+    {
+      childprocesses[kid].kill('SIGINT');
+    }
+  }
+});
 
 var httpServer = http.createServer( function(request, response) {
     var aURL = url.parse(request.url, true);
@@ -18,7 +27,17 @@ var httpServer = http.createServer( function(request, response) {
     //console.log("request =", request);
     //console.log("pathname =", pathname);
     
-    if(pathname == "/run")
+    /*// TODO : add another signal path to close al childprocesses processes 
+    launch without and end on maybe we add a tidy up for each libarary 
+    the is running text becomes a link to kill the process? so it runs until its stopped
+    and doing a new run does a term first?
+    would need to do cp.kill('SIGTERM')
+    
+    maybe a seperate page that lets you see the staus 
+    */
+    
+    
+    if(pathname === "/run")
     {
       //console.log("aURL =", aURL);
       
@@ -30,97 +49,87 @@ var httpServer = http.createServer( function(request, response) {
         fs.writeFile("current.js", aURL.query.code);
         
         var spawn = require('child_process').spawn,
-        ls    = spawn('nodejs', ['current.js']);
-
-        ls.stdout.on('data', function (data) {
+        ls    = spawn('node', ['current.js']);
+        
+        console.log("ls.pid =", ls.pid);
+        
+        childprocesses[ls.pid] = ls;
+        
+        
+        
+        childprocesses[ls.pid].stdout.on('data', function (data) {
           console.log('stdout: ' + data);
           response.writeHead(200, {'Content-Type': 'text/html'});
           //response.write(aURL.query.callback+"("+JSON.stringify(aURL.query.code)+")");
-          response.write(aURL.query.callback+"(true)");
+          response.write(aURL.query.callback+"({\"status\":\"running\", \"pid\":"+ls.pid+"})");
           response.end();
         });
 
-        ls.stderr.on('data', function (data) {
+        childprocesses[ls.pid].stderr.on('data', function (data) {
           console.log('stderr: ' + data);
           bSuccess = false;
-          response.writeHead(500, {'Content-Type': 'text/html'});
-          response.write(error);
-          response.end();
-
+          child.stderr.on('data', function (data) {
+          if (/^execvp\(\)/.test(data)) {
+            response.writeHead(500, {'Content-Type': 'text/html'});
+            response.write(aURL.query.callback+"({\"status\":\"error\", \"pid\":"+ls.pid+",\"error\":data})");
+            response.end();
+          }
+          
         });
 
-        ls.on('close', function (code) {
-          console.log('child process exited with code ' + code);
+        childprocesses[ls.pid].on('exit', function (code) {
+          console.log('childprocesses process exited with code ' + code);
           response.writeHead(200, {'Content-Type': 'text/html'});
           //response.write(aURL.query.callback+"("+JSON.stringify(aURL.query.code)+")");
-          response.write(aURL.query.callback+"(true)");
+          response.write(aURL.query.callback+"({\"status\":\"success\", \"pid\":"+ls.pid+"})");
           response.end();
           
         });
 
         var bSuccess = true;
-        try{
-          //eval(aURL.query.code);
-	  
-        } 
-        catch(error){
-        }
         
-        if(bSuccess)
-        {
-        }
       }
-      
-      /*
-          socket.on('commit-run-file', function(data) {
-      console.log(data);
-      if (data && data.file) {
-        data.file.username = socket.handshake.session.username;
-      }
-
-      exec_helper.execute_program(data.file, false);
-      git_helper.commit_push_and_save(data.file, "Modified " + data.file.name, function(err, status) {
-        socket.emit('commit-file-complete', {message: "Save was successful"});
-      });
-    });
-
-    socket.on('stop-script-execution', function(data) {
-      exec_helper.stop_program(data.file, false);
-    });
-
-
-      
-      */
-      
       
     }
-    
-    if (pathname == "/")
+    else if(pathname === "/kill")
     {
-      pathname = "index.html";
-    }
-    var filename = path.join(process.cwd(), 'waterbear', pathname);
-
-    path.exists(filename, function(exists) {
-        if (!exists) {
-            response.writeHead(404, {"Content-Type": "text/plain"});
-            response.write("404 Not Found");
-            response.end();
-            return;
+      if(typeof aURL.query.id !== 'null')
+      {
+        if(typeof childprocesses[ls.pid] !== 'null')
+        {
+          childprocesses[ls.pid].kill('SIGINT');
         }
-
-        response.writeHead(200, {'Content-Type': mime.lookup(filename)});
-        fs.createReadStream(filename, {
-            'flags': 'r',
-            'encoding': 'binary',
-            'mode': 0666,
-            'bufferSize': 4 * 1024
-        }).addListener("data", function(chunk) {
-            response.write(chunk, 'binary');
-        }).addListener("close",function() {
-            response.end();
-        });
-    });
+      }
+    }
+    else 
+    {
+      if (pathname === "/")
+      {
+        pathname = "index.html";
+      }
+      var filename = path.join(process.cwd(), 'waterbear', pathname);
+  
+      fs.exists(filename, function(exists) {
+          if (!exists) {
+              response.writeHead(404, {"Content-Type": "text/plain"});
+              response.write("404 Not Found");
+              response.end();
+              return;
+          }
+  
+          response.writeHead(200, {'Content-Type': mime.lookup(filename)});
+          fs.createReadStream(filename, {
+              'flags': 'r',
+              'encoding': 'binary',
+              'mode': 666,
+              'bufferSize': 4 * 1024
+          }).addListener("data", function(chunk) {
+              response.write(chunk, 'binary');
+          }).addListener("close",function() {
+              response.end();
+          });
+      });
+    }
 });
 
 

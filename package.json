@@ -5,7 +5,10 @@
   "dependencies": {
     "mime": "~1.2.9",
     "ws": "~0.4.25",
-    "piface-node":""
+    "piface-node":"",
+    "arduino-firmata":"",
+    "vec3":"",
+    "minecraft-pi-vec3":""
   },
   "repository": {
     "type": "git",

@@ -20,4 +20,4 @@ gpio -g mode 7 down
 gpio -g mode 8 down
 gpio -g mode 10 down
 
-node waterbear.js
+/opt/node/bin/node waterbear.js

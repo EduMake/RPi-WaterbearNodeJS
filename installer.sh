@@ -1,25 +1,25 @@
 #!/bin/bash
 
 #installer
-startingdir = `pwd`
+startingdir="`pwd`"
 echo "running in $startingdir"
 
-
 #install node 
-
 #is node installed?
-nodepath = "/opt/node/bin/node"
+nodepath="/opt/node/bin/node"
 
 if [ -e "$nodepath" ]
 then
     echo "Node already installed in $nodepath"
 else
     echo "Installing Node @ $nodepath."
+    
     wget http://nodejs.org/dist/v0.10.21/node-v0.10.21-linux-arm-pi.tar.gz
     tar -zxvf node-v0.10.21-linux-arm-pi.tar.gz
     sudo mkdir /opt/node
     sudo cp -r node-v0.10.21-linux-arm-pi/* /opt/node
     
+    # TODO : Add /opt/node to the PATH
     # sudo vi /etc/profile
     #Add the following lines to the configuration file before the ‘export’ command.
     #NODE_JS_HOME="/opt/node"
@@ -29,10 +29,8 @@ else
     
 fi
 
-
-
 cd ~
-pifacepath = "piface"
+pifacepath="piface"
 #is piface installed
 if [ -e "$pifacepath" ]
 then
@@ -55,14 +53,12 @@ cd $startingdir
 echo "staring node.js library install with npm"
 /opt/node/bin/npm install
 
-
-
+# TODO : Server setup
 #ask about PiBrella?
-
 #server setup start
 
 #get waterbear
-waterbearpath = "waterbear/index.html"
+waterbearpath="waterbear/index.html"
 #is piface installed
 if [ -e "$waterbearpath" ]
 then
@@ -73,7 +69,7 @@ else
     git submodule init
     git submodule update
     cd waterbear
-    git checkout master
+    #git checkout master
     cd ..
 fi
 

@@ -3,49 +3,69 @@ RPi-WaterbearNodeJS
 
 A nodejs server which serves Waterbear from the RaspberryPi and provides a way for nodejs scripts to be uploaded and run.
 
+This includes ways to program
+ * Minecraft Pi Edition http://pi.minecraft.net/?p=68
+ * PiFace Digital I/O board http://www.piface.org.uk/products/piface_digital/
+ * PiBrella I/O board http://pibrella.com/
+ * Firmata (not currently tested)
+
 For news follow @EduMakeCoop on Twitter
 
 Requirements
 ============
 
-Get & install Minecraft Pi Edition from http://pi.minecraft.net/?p=68
-
+ * A Raspberry Pi
+ * To use the minecraft features get & install Minecraft Pi Edition from http://pi.minecraft.net/?p=68
 
 Installing
 ==========
 
-Once you have got the code cd into the directory then run: 
+If you don't have git yet 
+```bash
+sudo apt-get install git```
+
+Once you have that....
 
 ```bash
-git submodule update --init --recursive
-# If not installed: sudo aptitude install nodejs npm
-npm install
+git clone https://github.com/EduMake/RPi-WaterbearNodeJS.git
+cd RPi-WaterbearNodeJS
+sudo ./installer.sh
 ```
+This will take a while (10 minutes is not unusual) and install lots of stuff. 
 
 Running
 =======
 
-Get Minecraft Pi edition running and start a  game.
+To use Minecraft Pi get that running and start a game.
+
+To start the waterbear server.....
 
 ```bash
-nodejs nodejs-server.js
+./waterbear.sh
+```
+
+or if you want to use a PiBrella
+
+```bash
+./pibrella-waterbear.sh
 ```
 
 then using a web browser on another machine visit
 
-http://IP:8000/garden.html?plugin=nodeminecraft
+http://IP:8000/node.html
 
 changing the IP to the one for your Raspberry Pi
 
 
 Running on the PC version (V.V. Buggy)
 ======================================
+This is more technical and I'm being vague so only try this if you have a idea what I'm on about
 
 Install a bukkit server from  http://wiki.bukkit.org/Main_Page (I'm using the dev build )
 
 Install the RaspberryJuice plugin from http://dev.bukkit.org/server-mods/raspberryjuice/
 
-Follow the rest of the Raspberry Pi instructions about installing and running nodejs and the web page. 
+Clone this repo and init and update the submodules, then run "npm install", Once its installed "node waterbear.js" will start the server.
 
 Try not to make 40000 blocks of TNT touch lava.
 
@@ -54,7 +74,7 @@ License
 
 Copyright 2011 EduMake Limited
 
-Waterbear code licensed under the Apache License, Version 2.0 (the "License");
+RPi-WaterbearNodeJS code licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 

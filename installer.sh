@@ -24,9 +24,7 @@ else
     #Add the following lines to the configuration file before the ‘export’ command.
     #NODE_JS_HOME="/opt/node"
     #PATH="$PATH:$NODE_JS_HOME/bin"
-    #export PATH
-
-    
+    #export PATH  
 fi
 
 cd ~
@@ -46,6 +44,18 @@ else
     sudo ldconfig
     cd ../scripts
     sudo ./spidev-setup    
+fi
+
+cd ~
+wiringpipath="wiringPi"
+#is wiringpi installed
+if [ -e "$wiringpipath" ]
+then
+    echo "wiringPi already installed in $wiringpipath"
+else
+    git clone git://git.drogon.net/wiringPi
+    cd wiringPi
+    ./build
 fi
 
 
@@ -73,4 +83,5 @@ else
     cd ..
 fi
 
-
+echo "Installer finished ..."
+echo "Type waterbear.sh"

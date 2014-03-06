@@ -22,7 +22,8 @@ Installing
 
 If you don't have git yet 
 ```bash
-sudo apt-get install git```
+sudo apt-get install git
+```
 
 Once you have that....
 

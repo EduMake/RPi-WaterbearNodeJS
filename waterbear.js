@@ -23,9 +23,10 @@ var httpServer = http.createServer( function(request, response) {
     var aURL = url.parse(request.url, true);
     var pathname = aURL.pathname;
     
-    if (pathname === "/")
+    var lastletter = aURL.pathname.charAt(aURL.pathname.length-1);
+    if (lastletter === "/")
     {
-      pathname = "index.html";
+      pathname = aURL.pathname+"index.html";
     }
     var filename = path.join(process.cwd(), 'waterbear', pathname);
 
